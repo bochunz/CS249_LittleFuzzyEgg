@@ -11,12 +11,12 @@ public class Indexed<T> {
 		this.bag = new BagOfTags();
 	}
 	
-	public void setWeights(List<Tag> tags) {
-		bag.setWeights(tags);
+	public void addCount(List<Tag> tags) {
+		bag.addCount(tags);
 	}
 	
-	public void setWeights(List<Tag> tags, int weight) {
-		bag.setWeights(tags, weight);
+	public void addCount(List<Tag> tags, int c) {
+		bag.addCount(tags, c);
 	}
 	
 	public T getKey() {
@@ -27,7 +27,7 @@ public class Indexed<T> {
 		return bag.getTags();
 	}
 	
-	public int getWeight(Tag tag) {
-		return bag.getWeight(tag);
+	public int getCount(Tag tag) {
+		return bag.getCount(tag);
 	}
 }
