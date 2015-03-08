@@ -8,6 +8,7 @@ import edu.ucla.cs249.littlefuzzyegg.data.*;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.*;
 import edu.ucla.cs249.littlefuzzyegg.io.*;
 import edu.ucla.cs249.littlefuzzyegg.split.*;
+import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 
 
 public class Main {
@@ -69,6 +70,8 @@ public class Main {
 			p.addCount(tagList, true);
 			indexedProductMap.put(product.getSku(), p);
 		}
+		System.out.println("Dic size: "+Dictionary.getInstance().getSize());
+		System.out.println("Dic content: "+Dictionary.getInstance().getList());
 		System.out.println("2.1a");
 		for (Order o : orderList) {
 			//System.out.println(o.getUser()+" "+o.getSku());
