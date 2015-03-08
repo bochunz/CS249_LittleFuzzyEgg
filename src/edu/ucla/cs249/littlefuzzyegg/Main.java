@@ -105,11 +105,15 @@ public class Main {
 		 * 3.3 Compare with answer list and calculate accuracy
 		 */
 		int correctNumber = 0;
+		int i = 0;
+		totalTest = 0;
 		for (Order testOrder : testList) {
 			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
 			o.addCount(tagList, false);
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
+			if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
+			i++;
 			for (Product p : result) {
 				if (answerList.get(totalTest).compareTo(p.getSku()) == 0) {
 					correctNumber++;
@@ -126,7 +130,7 @@ public class Main {
 		System.out.println("4");
 	}
 	
-	public void printPrediction(Order testOrder, List<Product> result) {
+	public static void printPrediction(Order testOrder, List<Product> result, String sku) {
 		System.out.println("------------------------------------------");
 		System.out.println("Order query: " + testOrder.getQuery());
 		int i = 0;
@@ -134,5 +138,6 @@ public class Main {
 			++i;
 			System.out.println("rank " + i + ": " + p.getName());
 		}
+		System.out.println("Correct: " + indexedProductMap.get(sku).getKey().getName());
 	}
 }
