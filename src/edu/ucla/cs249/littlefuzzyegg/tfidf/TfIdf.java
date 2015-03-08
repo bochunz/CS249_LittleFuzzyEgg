@@ -56,8 +56,10 @@ public class TfIdf {
 		}
 		Collections.sort(scores);
 		List<Product> ret = new ArrayList<Product>();
-		for(Score score : scores.subList(0, k))
+		for(Score score : scores.subList(0, k)) {
+			System.out.println(score.score);
 			ret.add(score.product.getKey());
+		}
 		return ret;
 	}
 	
