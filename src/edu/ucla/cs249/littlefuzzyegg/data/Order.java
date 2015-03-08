@@ -6,7 +6,7 @@ public class Order {
     private final long entered;
     private final String query;
     
-    Order(String sku, String user, long entered, String query) {
+    public Order(String sku, String user, long entered, String query) {
     	this.sku = sku;
     	this.user = user;
     	this.entered = entered;
@@ -27,5 +27,10 @@ public class Order {
 
 	public String getQuery() {
 		return query;
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + sku + "," + user + "," + entered + "," + query + ")";
 	}
 }

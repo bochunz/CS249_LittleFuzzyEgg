@@ -1,6 +1,8 @@
 package edu.ucla.cs249.littlefuzzyegg.data;
 
 public class Product {
+	public static final int NO_RANK = 100000;
+	
 	private final String name;
     private final String sku;
     private final long startDate;
@@ -27,5 +29,10 @@ public class Product {
 
 	public int getRank() {
 		return rank;
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + sku + "," + name + "," + startDate + "," + rank + ")";
 	}
 }
