@@ -14,6 +14,7 @@ public class Dictionary {
 	
 	private Dictionary() {
 		words = new HashSet<String>();
+		words.add("battlefield");
 	}
 	
 	public static Dictionary getInstance() {
