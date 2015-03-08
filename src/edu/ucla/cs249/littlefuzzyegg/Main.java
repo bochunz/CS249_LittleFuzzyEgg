@@ -15,7 +15,7 @@ public class Main {
 	/*
 	 * < sku - indexedProduct >
 	 */
-	private static Map<String, Indexed<Product>> indexedProductMap;
+	private static Map<String, Indexed<Product>> indexedProductMap = Maps.newHashMap();
 	private static int totalTest = 0;
 	
 	public final static int TOP_N = 5;
@@ -54,7 +54,13 @@ public class Main {
 		List<String> answerList = LabelReader.ReadLabels(answerFile);
 		
 		/*
-		 * 2.1 Generate List of Tags for each product and insert into indexedProductMap
+		 * 2.1 Generate orderHistory
+		 */
+		
+		OrderHistory orderHistory = new OrderHistory(orderList);
+		System.out.println("2.1");
+		/*
+		 * 2.2 Generate List of Tags for each product and insert into indexedProductMap
 		 */
 		
 		for (Product product : productList) {
@@ -63,9 +69,18 @@ public class Main {
 			p.addCount(tagList, true);
 			indexedProductMap.put(product.getSku(), p);
 		}
-		
+		System.out.println("2.1a");
+		for (Order o : orderList) {
+			//System.out.println(o.getUser()+" "+o.getSku());
+			Indexed<Product> p = indexedProductMap.get(o.getSku());
+			if (p != null) {
+				List<Tag> tagList = Bagger.toBag(o, orderHistory, true);
+				p.addCount(tagList, false);
+			}
+		}
+		System.out.println("2.2");
 		/*
-		 * 2.2 Construct orderCount : < indexedProduct - number of orders on that product >
+		 * 2.3 Construct orderCount : < indexedProduct - number of orders on that product >
 		 */
 		
 		Map<Indexed<Product>, Integer> orderCount = Maps.newHashMap();
@@ -78,19 +93,13 @@ public class Main {
 				orderCount.put(p, orderCount.get(p)+1);
 			}
 		}
-		
-		/*
-		 * 2.3 Generate orderHistory
-		 */
-		
-		OrderHistory orderHistory = new OrderHistory(orderList);
-		
+		System.out.println("2.3");
 		/*
 		 * 3.1 Generate instance of TfIdf
 		 */
 		
 		TfIdf tfIdf = new TfIdf(orderCount);
-		
+		System.out.println("3.1");
 		/* 
 		 * 3.2 For each testOrder, select top-N products
 		 * 3.3 Compare with answer list and calculate accuracy
@@ -109,11 +118,11 @@ public class Main {
 			}
 			totalTest ++;
 		}
-		
+		System.out.println("3.23");
 		/*
 		 * 4. Output Accuracy
 		 */
 		System.out.println("The accuracy is "+(double)correctNumber/(double)totalTest);
-		
+		System.out.println("4");
 	}
 }
