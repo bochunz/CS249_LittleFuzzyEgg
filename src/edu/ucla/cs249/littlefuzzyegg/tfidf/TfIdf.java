@@ -18,6 +18,7 @@ public class TfIdf {
 				this.tags.put(tag, c);
 			}
 		}
+		System.out.println("tags size: " + tags.size());
 	}
 	
 	public double getTfIdf(BagOfTags query, Indexed<Product> product) {
@@ -57,7 +58,7 @@ public class TfIdf {
 		Collections.sort(scores);
 		List<Product> ret = new ArrayList<Product>();
 		for(Score score : scores.subList(0, k)) {
-			System.out.println(score.score);
+			//System.out.println(score.score);
 			ret.add(score.product.getKey());
 		}
 		return ret;
@@ -78,7 +79,8 @@ public class TfIdf {
 		public int compareTo(Score other) {
 			if (this.score == other.score) {
 				// choose the product which occurs more frequently in the train set  
-				return this.count < other.count ? 1 : -1;
+				if (this.count == other.count) return 0;
+				else return (this.count< other.count ? 1 : -1);
 			}
 			return this.score < other.score ? 1 : -1;
 		}

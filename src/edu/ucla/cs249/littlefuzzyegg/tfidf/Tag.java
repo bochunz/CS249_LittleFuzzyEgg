@@ -51,4 +51,11 @@ public class Tag {
 		Tag t = (Tag)other;
 		return (this.type == t.type && this.value.equals(t.value));
 	}
+	
+	@Override
+	public int hashCode() {
+		int ret = type != null ? type.hashCode() : 0;
+		ret = ret * 31 + value.hashCode();
+		return ret;
+	}
 }
