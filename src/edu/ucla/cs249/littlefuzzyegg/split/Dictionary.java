@@ -24,6 +24,7 @@ public class Dictionary {
 	
 	public void importWords (List<String> wordList) {
 		for (String word : wordList) {
+			// we just add word that is longer than ELIMINATE_LENGTH into the dict
 			if (word.length() > ELIMINATE_LENGTH)
 				words.add(word);
 		}
