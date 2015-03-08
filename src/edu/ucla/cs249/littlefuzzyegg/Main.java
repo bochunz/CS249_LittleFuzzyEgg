@@ -118,7 +118,6 @@ public class Main {
 			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
 			o.addCount(tagList, false);
-			if (i < 5) {
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
 			if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
 			i++;
@@ -128,11 +127,9 @@ public class Main {
 					break;
 				}
 			}
-			}
-			i++;
 			totalTest ++;
 		}
-		System.out.println("3.23");
+		System.out.println("3.2-3");
 		/*
 		 * 4. Output Accuracy
 		 */
