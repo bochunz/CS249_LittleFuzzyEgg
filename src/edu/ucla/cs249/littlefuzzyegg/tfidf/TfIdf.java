@@ -34,7 +34,8 @@ public class TfIdf {
 		double norm = tf;
 		for(Tag t : product.getTags())
 			norm = Math.max(norm, product.getCount(t));
-		tf /= norm;
+		if (norm > 0)
+			tf /= norm;
 		if (tag.getType() == Type.ALSO) tf *= 0.8;
 		else if (tag.getType() == Type.ACRONYM) tf *= 1.5;
 		double idf = Math.log(bags.size()) - Math.log(tags.get(tag));
