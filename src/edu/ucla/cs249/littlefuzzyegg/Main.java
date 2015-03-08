@@ -104,6 +104,7 @@ public class Main {
 			for (Product p : result) {
 				if (answerList.get(totalTest).compareTo(p.getSku()) == 0) {
 					correctNumber++;
+					break;
 				}
 			}
 			totalTest ++;
