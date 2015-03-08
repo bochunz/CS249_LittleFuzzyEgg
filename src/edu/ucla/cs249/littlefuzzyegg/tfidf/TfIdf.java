@@ -42,7 +42,7 @@ public class TfIdf {
 		else
 			tf = 0;
 		if (tag.getType() == Type.ALSO) tf *= 0.8;
-		else if (tag.getType() == Type.ACRONYM) tf *= 1.5;
+		else if (tag.getType() == Type.ACRONYM) tf *= 1.2;
 		
 		// IDF_i = log(N / n_i)
 		double idf = Math.log(indexedProducts.size()) - Math.log(tags.get(tag));
