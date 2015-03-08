@@ -1,10 +1,9 @@
 package edu.ucla.cs249.littlefuzzyegg.split;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
-import com.sun.tools.javac.util.List;
 
 import edu.ucla.cs249.littlefuzzyegg.data.Order;
 
@@ -21,7 +20,7 @@ public class OrderHistory {
 		}
 	}
 	
-	public ArrayList<String> getOrderHistory(String userId) {
+	public List<String> getOrderHistory(String userId) {
 		return Lists.newArrayList(history.get(userId));
 	}
 }

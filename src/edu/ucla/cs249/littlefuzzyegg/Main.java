@@ -60,7 +60,7 @@ public class Main {
 		for (Product product : productList) {
 			List<Tag> tagList = Bagger.toBag(product);
 			Indexed<Product> p = new Indexed<Product>(product);
-			p.addCount(tagList);
+			p.addCount(tagList, true);
 			indexedProductMap.put(product.getSku(), p);
 		}
 		
@@ -80,6 +80,12 @@ public class Main {
 		}
 		
 		/*
+		 * 2.3 Generate orderHistory
+		 */
+		
+		OrderHistory orderHistory = new OrderHistory(orderList);
+		
+		/*
 		 * 3.1 Generate instance of TfIdf
 		 */
 		
@@ -91,9 +97,9 @@ public class Main {
 		 */
 		int correctNumber = 0;
 		for (Order testOrder : testList) {
-			List<Tag> tagList = Bagger.toBag(testOrder);
+			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
-			o.addCount(tagList);
+			o.addCount(tagList, false);
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
 			for (Product p : result) {
 				if (answerList.get(totalTest).compareTo(p.getSku()) == 0) {
