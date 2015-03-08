@@ -119,13 +119,17 @@ public class Main {
 			Indexed<Order> o = new Indexed<Order>(testOrder);
 			o.addCount(tagList, false);
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
-			if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
-			i++;
+			boolean flag = false;
 			for (Product p : result) {
 				if (answerList.get(totalTest).compareTo(p.getSku()) == 0) {
 					correctNumber++;
+					flag = true;
 					break;
 				}
+			}
+			if (!flag) {
+				if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
+				i++;
 			}
 			totalTest ++;
 		}
