@@ -11,6 +11,5 @@ public class TfIdf {
 	}
 	
 	public double getTfIdf(BagOfTags query, Indexed<Product>) {
-		
 	}
 }
