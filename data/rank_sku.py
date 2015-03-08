@@ -11,7 +11,7 @@ class MyDialect(csv.Dialect):
     lineterminator = '\n'
 
 def main():
-    f = open('mytrain.csv', 'rb')
+    f = open('mytrain2.csv', 'rb')
     reader = csv.reader(f,MyDialect())
     
     popularity_map = {}

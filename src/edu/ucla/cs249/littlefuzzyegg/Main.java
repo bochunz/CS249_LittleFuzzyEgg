@@ -8,6 +8,7 @@ import edu.ucla.cs249.littlefuzzyegg.data.*;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.*;
 import edu.ucla.cs249.littlefuzzyegg.io.*;
 import edu.ucla.cs249.littlefuzzyegg.split.*;
+import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 
 
 public class Main {
@@ -46,13 +47,15 @@ public class Main {
 		
 		List<Order> orderList = OrderReader.ReadTrainOrders(trainFile);
 		List<Order> testList = OrderReader.ReadTestOrders(testFile);
-		
+		System.out.println("testList #: "+testList.size());
+		System.out.println("testList: "+testList.get(7000));
 		/*
 		 * 1.3 Read answer file
 		 */
 		
 		List<String> answerList = LabelReader.ReadLabels(answerFile);
-		
+		System.out.println("answerList #: "+answerList.size());
+		System.out.println("answerList: "+answerList.get(7000));
 		/*
 		 * 2.1 Generate orderHistory
 		 */
@@ -62,22 +65,27 @@ public class Main {
 		/*
 		 * 2.2 Generate List of Tags for each product and insert into indexedProductMap
 		 */
-		
+		int totalTags = 0;
 		for (Product product : productList) {
 			List<Tag> tagList = Bagger.toBag(product);
+			totalTags += tagList.size();
 			Indexed<Product> p = new Indexed<Product>(product);
 			p.addCount(tagList, true);
 			indexedProductMap.put(product.getSku(), p);
 		}
+		System.out.println("total tag size: "+totalTags);
+		//System.out.println("Dic content: "+Dictionary.getInstance().getList());
 		System.out.println("2.1a");
 		for (Order o : orderList) {
 			//System.out.println(o.getUser()+" "+o.getSku());
 			Indexed<Product> p = indexedProductMap.get(o.getSku());
 			if (p != null) {
 				List<Tag> tagList = Bagger.toBag(o, orderHistory, true);
+				totalTags += tagList.size();
 				p.addCount(tagList, false);
 			}
 		}
+		System.out.println("total tag size: "+totalTags);
 		System.out.println("2.2");
 		/*
 		 * 2.3 Construct orderCount : < indexedProduct - number of orders on that product >
@@ -106,11 +114,11 @@ public class Main {
 		 */
 		int correctNumber = 0;
 		int i = 0;
-		totalTest = 0;
 		for (Order testOrder : testList) {
 			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
 			o.addCount(tagList, false);
+			if (i < 5) {
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
 			if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
 			i++;
@@ -120,6 +128,8 @@ public class Main {
 					break;
 				}
 			}
+			}
+			i++;
 			totalTest ++;
 		}
 		System.out.println("3.23");

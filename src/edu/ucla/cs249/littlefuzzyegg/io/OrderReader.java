@@ -26,7 +26,7 @@ public class OrderReader {
 			fileReader = new FileReader(filename);
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);
 			List csvRecords = csvFileParser.getRecords(); 
-			for (int i = 1; i < csvRecords.size(); i++) {
+			for (int i = 0; i < csvRecords.size(); i++) {
                 CSVRecord record = (CSVRecord) csvRecords.get(i); 
                 
                 long entered = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(record.get("qtime").substring(0, 19)).getTime();
