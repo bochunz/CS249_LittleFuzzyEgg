@@ -23,4 +23,8 @@ public class BagOfTags {
 		ret.addAll(weights.keySet());
 		return ret;
 	}
+	
+	public int getWeight(Tag tag) {
+		return weights.get(tag);
+	}
 }
