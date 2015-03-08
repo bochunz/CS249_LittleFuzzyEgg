@@ -12,8 +12,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import edu.ucla.cs249.littlefuzzyegg.data.Product;
 
 public class ProductReader {
