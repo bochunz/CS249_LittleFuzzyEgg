@@ -11,19 +11,18 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import edu.ucla.cs249.littlefuzzyegg.data.Product;
 import edu.ucla.cs249.littlefuzzyegg.data.Order;
 
 public class OrderReader {
 	private static final String [] FILE_HEADER_MAPPING_TRAIN = {"user","sku","cat","query","qtime","ctime"};
 	private static final String [] FILE_HEADER_MAPPING_TEST = {"user","cat","query","qtime","ctime"};
 	
-	public static List<Product> ReadTrainOrders(String filename) {
+	public static List<Order> ReadTrainOrders(String filename) {
 		FileReader fileReader = null;
 		CSVParser csvFileParser = null;
 		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING_TRAIN);
 		
-		List orders = new ArrayList<Product>();
+		List orders = new ArrayList<Order>();
 		try {
 			fileReader = new FileReader(filename);
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);
@@ -49,12 +48,12 @@ public class OrderReader {
 		return orders;
 	}
 	
-	public static List<Product> ReadTestOrders(String filename) {
+	public static List<Order> ReadTestOrders(String filename) {
 		FileReader fileReader = null;
 		CSVParser csvFileParser = null;
 		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING_TEST);
 		
-		List orders = new ArrayList<Product>();
+		List orders = new ArrayList<Order>();
 		try {
 			fileReader = new FileReader(filename);
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);

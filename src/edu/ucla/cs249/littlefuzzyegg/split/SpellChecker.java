@@ -31,6 +31,10 @@ public class SpellChecker {
 				candidate = word;
 			}
 		}
+		// if the minScore is bigger than 3, it means there is no word in dict to correct it
+		// just return the original word
+		if (minScore > 3)
+			return checkWord;
 		return candidate;
 	}
 	
