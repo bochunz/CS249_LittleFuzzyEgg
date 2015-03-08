@@ -51,7 +51,7 @@ public class Main {
 		 * 1.3 Read answer file
 		 */
 		
-		List<String> answerList = LabelReader.ReadTrainOrders(answerFile);
+		List<String> answerList = LabelReader.ReadLabels(answerFile);
 		
 		/*
 		 * 2.1 Generate List of Tags for each product and insert into indexedProductMap
