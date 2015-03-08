@@ -11,14 +11,10 @@ public class Indexed<T> {
 		this.bag = new BagOfTags();
 	}
 	
-	public void addCount(List<Tag> tags) {
-		bag.addCount(tags);
+	public void addCount(List<Tag> tags, boolean fromProduct) {
+		bag.addCount(tags, fromProduct);
 	}
-	
-	public void addCount(List<Tag> tags, int c) {
-		bag.addCount(tags, c);
-	}
-	
+		
 	public T getKey() {
 		return key;
 	}

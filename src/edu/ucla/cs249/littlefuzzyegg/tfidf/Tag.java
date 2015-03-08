@@ -24,7 +24,7 @@ public class Tag {
 		return new Tag(Type.WORD, word);
 	}
 	
-	public static Tag date(Date date) {
+	public static Tag date(long date) {
 		return new Tag(Type.DATE, DATE_FORMAT.format(date));
 	}
 	
