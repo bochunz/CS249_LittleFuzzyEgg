@@ -9,19 +9,17 @@ import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag.Type;
 
 public class BagOfTags {
 	private final static int PRODUCT_WEIGHT = 30;
-	private final static int ACRONYM_WEIGHT = 10;
+	private final static int ACRONYM_WEIGHT = 1;
 	private final Map<Tag, Integer> count = new HashMap<Tag, Integer>();
 	
 	public void addCount(List<Tag> tags, boolean fromProduct) {
-		if (fromProduct)
-			addCount(tags, PRODUCT_WEIGHT);
-		else
-			addCount(tags, 1);
+		int weight = fromProduct ? PRODUCT_WEIGHT : 1;
+		addCount(tags, weight);
 		List<Tag> acronyms = new ArrayList<Tag>();
 		for(Tag t : tags)
 			if (t.getType() == Type.ACRONYM)
 				acronyms.add(t);
-		addCount(acronyms, ACRONYM_WEIGHT);
+		addCount(acronyms, weight * ACRONYM_WEIGHT);
 	}
 	
 	public void addCount(List<Tag> tags, int c) {

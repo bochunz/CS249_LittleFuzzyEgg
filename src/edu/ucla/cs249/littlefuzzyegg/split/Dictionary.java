@@ -35,4 +35,8 @@ public class Dictionary {
 		return new ArrayList<String> (words);
 	}
 	
+	public int getSize() {
+		return words.size();
+	}
 }
+
