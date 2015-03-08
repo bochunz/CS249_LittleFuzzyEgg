@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LabelReader {
-	public static List<String> ReadTrainOrders(String filename) {
+	public static List<String> ReadLabels(String filename) {
 		List<String> labels = new ArrayList<String>();
 		try {
 			BufferedReader reader = new BufferedReader( new FileReader (new File(filename)));
@@ -26,6 +26,6 @@ public class LabelReader {
 	}
 
 	public static void main(String[] argv) {
-		System.out.println(ReadTrainOrders("mytest_label.csv"));
+		System.out.println(ReadLabels("mytest_label.csv"));
 	}
 }

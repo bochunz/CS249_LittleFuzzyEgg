@@ -32,6 +32,15 @@ public class Bagger {
     	// first put entered time as an DATA tag
     	result.add(Tag.date(entered));
     	
+    	// add also
+    	List<String> alsoList = history.getOrderHistory(order.getUser());
+    	for (String alsoSku : alsoList) {
+    		result.add(Tag.also(alsoSku));
+    	}
+    	
+    	// add the acronym
+    	result.addAll(Lists.newArrayList(toAcronym(query)));
+    	
     	// then we do on the query
     	List<String> termList = Lists.newArrayList(TERM_SPLITTER.split(query));
     	String prev = null;
@@ -39,8 +48,11 @@ public class Bagger {
     		String current = termList.get(i);
     		
     		// if current is a number
-    		// append with prev
-    		if (current.matches(NUMBER))
+    		// append with prev and we jump this term
+    		if (current.matches(NUMBER)) {
+    			result.add(Tag.word(prev + current));
+    			continue;
+    		}
     		
     		// here we try to correct the word
     		// if the checker returns a null, meaning we cannot use it to correct
@@ -48,10 +60,20 @@ public class Bagger {
     		String corrected = SpellChecker.getInstance().check(current);
     		if (corrected == null)
     			corrected = current;
-    		// if the corrected current is a version number or year
-    		if ()
     		
+    		// concatenate the prev with the current corrected
+    		String append = prev + corrected;
+    		
+    		// we should put the corrected into the list of tags
+    		result.add(Tag.word(corrected));
     		prev = corrected;
+    		
+    		// we try to append the current with the prev and check if it is a word
+    		String correctedAppend = SpellChecker.getInstance().check(append);
+    		if (correctedAppend != null) {
+    			result.add(Tag.word(correctedAppend));
+    			prev = correctedAppend;
+    		}
     	}
     	
     	
@@ -134,8 +156,14 @@ public class Bagger {
 //		for (Tag tag : test) {
 //			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
 //		}
-		Product product = new Product("Call Of Duty : Modern Warfare 3", "AA3333", 123, 12);
-		List<Tag> test = toBag(product);
+//		Product product = new Product("Call Of Duty : Modern Warfare 3", "AA3333", 123, 12);
+//		List<Tag> test = toBag(product);
+//		for (Tag tag : test) {
+//			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
+//		}
+		
+		Order order = new Order("AAXXX", "Shaoxiang", 123456, "Battlefield 3");
+		List<Tag> test = toBag(order, null, true);
 		for (Tag tag : test) {
 			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
 		}
