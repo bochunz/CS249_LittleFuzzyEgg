@@ -26,7 +26,7 @@ public class ProductReader {
 			fileReader = new FileReader(filename);
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);
 			List csvRecords = csvFileParser.getRecords(); 
-			for (int i = 1; i < csvRecords.size(); i++) {
+			for (int i = 0; i < csvRecords.size(); i++) {
                 CSVRecord record = (CSVRecord) csvRecords.get(i); 
                 int rank = Product.NO_RANK;
                 if (rankMap.containsKey(record.get("sku"))) {
