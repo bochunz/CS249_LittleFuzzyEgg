@@ -128,4 +128,14 @@ public class Main {
 		System.out.println("The accuracy is "+(double)correctNumber/(double)totalTest);
 		System.out.println("4");
 	}
+	
+	public void printPrediction(Order testOrder, List<Product> result) {
+		System.out.println("------------------------------------------");
+		System.out.println("Order query: " + testOrder.getQuery());
+		int i = 0;
+		for(Product p : result) {
+			++i;
+			System.out.println("rank " + i + ": " + p.getName());
+		}
+	}
 }
