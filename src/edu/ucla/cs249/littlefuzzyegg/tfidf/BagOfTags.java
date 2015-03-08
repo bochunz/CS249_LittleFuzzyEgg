@@ -27,4 +27,5 @@ public class BagOfTags {
 	public int getCount(Tag tag) {
 		return count.containsKey(tag) ? count.get(tag) : 0;
 	}
+	
 }

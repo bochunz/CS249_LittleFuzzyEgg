@@ -30,4 +30,8 @@ public class Indexed<T> {
 	public int getCount(Tag tag) {
 		return bag.getCount(tag);
 	}
+	
+	public BagOfTags getBag() {
+		return bag;
+	}
 }

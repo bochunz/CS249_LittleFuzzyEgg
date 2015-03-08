@@ -41,10 +41,10 @@ public class TfIdf {
 		return tf * idf;
 	}
 	
-	public List<Product> getPrediction(BagOfTags query, int k) {
+	public List<Product> getPrediction(Indexed<Order> query, int k) {
 		List<Score> scores = new ArrayList<Score>();
 		for(Indexed<Product> product : bags.keySet()) {
-			double tfIdf = getTfIdf(query, product);
+			double tfIdf = getTfIdf(query.getBag(), product);
 			scores.add(new Score(tfIdf, product));
 		}
 		Collections.sort(scores);
