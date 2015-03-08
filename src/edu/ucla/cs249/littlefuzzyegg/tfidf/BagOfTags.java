@@ -6,21 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 public class BagOfTags {
-	private final Map<Tag, Integer> weights = new HashMap<Tag, Integer>();
+	private final Map<Tag, Integer> count = new HashMap<Tag, Integer>();
 	
-	public void setWeights(List<Tag> tags) {
-		setWeights(tags, 1);
+	public void addCount(List<Tag> tags) {
+		addCount(tags, 1);
 	}
 	
-	public void setWeights(List<Tag> tags, int weight) {
+	public void addCount(List<Tag> tags, int c) {
 		for(Tag tag : tags) {
-			weights.put(tag, weight);
+			count.put(tag, getCount(tag) + c);
 		}
 	}
 	
 	public List<Tag> getTags() {
 		List<Tag> ret = new ArrayList<Tag>();
-		ret.addAll(weights.keySet());
+		ret.addAll(count.keySet());
 		return ret;
+	}
+	
+	public int getCount(Tag tag) {
+		return count.containsKey(tag) ? count.get(tag) : 0;
 	}
 }
