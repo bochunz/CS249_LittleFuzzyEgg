@@ -55,7 +55,7 @@ public class Tag {
 	@Override
 	public int hashCode() {
 		int ret = type != null ? type.hashCode() : 0;
-		ret = ret * 31 + value.hashCode();
+		ret = value.hashCode() * 31 + ret;
 		return ret;
 	}
 }
