@@ -13,8 +13,8 @@ public class Indexed<T> {
 		this.bag = new BagOfTags();
 	}
 	
-	public void addCount(List<Tag> tags, boolean fromProduct, Dictionary dict) {
-		bag.addCount(tags, fromProduct, dict);
+	public void addCount(List<Tag> tags, boolean fromProduct) {
+		bag.addCount(tags, fromProduct);
 	}
 		
 	public T getKey() {
