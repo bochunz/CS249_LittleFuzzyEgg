@@ -3,6 +3,7 @@ package edu.ucla.cs249.littlefuzzyegg.tfidf;
 import java.util.*;
 
 import edu.ucla.cs249.littlefuzzyegg.data.*;
+import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag.Type;
 
 public class TfIdf {
@@ -32,21 +33,29 @@ public class TfIdf {
 	private double getTfIdf(Tag tag, Indexed<Product> product) {
 		if (!tags.containsKey(tag)) return 0;
 		
-		// TF_ij = f_ij / max_k{f_kj}
 		double tf = product.getCount(tag);
-		tf = Math.log(1 + tf);
+		
+		// TF_ij = f_ij / max_k{f_kj}
 		/*double norm = tf;
 		for(Tag t : product.getTags())
 			norm = Math.max(norm, product.getCount(t));
-		if (norm > 0)
-			tf /= norm;
-		else
-			tf = 0;*/
-		if (tag.getType() == Type.ALSO) tf *= 2;
-		else if (tag.getType() == Type.ACRONYM) tf *= 0;
+		//tf = 0.5 + 0.5 * tf / norm;
+		tf = tf / norm;*/
 		
-		// IDF_i = log(N / n_i)
-		double idf = Math.log(indexedProducts.size()) - Math.log(tags.get(tag));
+		// TF_ij = 1 + log(f_ij)
+		//tf = tf == 0 ? 0 : 1 + Math.log(tf);
+
+		// TF_ij = log(1 + f_ij)
+		tf = Math.log(1 + tf);
+		
+		if (tag.getType() == Type.ALSO) tf *= 0.8;
+		else if (tag.getType() == Type.ACRONYM) tf *= 0;
+		if (Dictionary.getInstance().isImportant(tag))
+			tf *= 2;
+
+		// IDF_i = log(1 + N / n_i)
+		//double idf = Math.log(indexedProducts.size()) - Math.log(tags.get(tag));
+		double idf = Math.log(1 + indexedProducts.size() / tags.get(tag));
 		return tf * idf;
 	}
 	

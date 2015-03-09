@@ -9,21 +9,12 @@ import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag.Type;
 
 public class BagOfTags {
-	private final static int PRODUCT_WEIGHT = 10;
-	private final static int TARGET_WEIGHT = 100000;
+	private final static int PRODUCT_WEIGHT = 15;
 	private final Map<Tag, Integer> count = new HashMap<Tag, Integer>();
 	
 	public void addCount(List<Tag> tags, boolean fromProduct) {
 		int weight = fromProduct ? PRODUCT_WEIGHT : 1;
 		addCount(tags, weight);
-		if (true) {
-			List<Tag> target = new ArrayList<Tag>();
-			for(Tag t : tags) {
-				if (Dictionary.getInstance().isImportant(t))
-					target.add(t);
-			}
-			addCount(target, weight * TARGET_WEIGHT);
-		}
 	}
 	
 	public void addCount(List<Tag> tags, int c) {
