@@ -42,8 +42,8 @@ public class TfIdf {
 			tf /= norm;
 		else
 			tf = 0;*/
-		if (tag.getType() == Type.ALSO) tf *= 1;
-		else if (tag.getType() == Type.ACRONYM) tf *= 1;
+		if (tag.getType() == Type.ALSO) tf *= 2;
+		else if (tag.getType() == Type.ACRONYM) tf *= 0;
 		
 		// IDF_i = log(N / n_i)
 		double idf = Math.log(indexedProducts.size()) - Math.log(tags.get(tag));
