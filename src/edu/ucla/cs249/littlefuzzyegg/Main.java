@@ -128,7 +128,7 @@ public class Main {
 				}
 			}
 			if (!flag) {
-				if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
+				if (i < 20) printPrediction(testOrder, result, answerList.get(totalTest));
 				i++;
 			}
 			totalTest ++;
@@ -149,6 +149,8 @@ public class Main {
 			++i;
 			System.out.println("rank " + i + ": " + p.getName());
 		}
-		System.out.println("Correct: " + indexedProductMap.get(sku).getKey().getName());
+		Indexed<Product> p = indexedProductMap.get(sku);
+		if (p != null)
+			System.out.println("Correct: " + p.getKey().getName());
 	}
 }
