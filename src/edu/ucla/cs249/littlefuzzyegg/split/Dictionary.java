@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.ucla.cs249.littlefuzzyegg.data.Product;
+import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag;
 
 public class Dictionary {
 	private static int ELIMINATE_LENGTH = 2;
@@ -158,6 +159,10 @@ public class Dictionary {
 			if (word.length() > ELIMINATE_LENGTH && word.matches("[a-zA-Z]+"))
 				words.add(word);
 		}
+	}
+	
+	public boolean isImportant(Tag tag) {
+		return false;
 	}
 	
 	public List<String> getList() {
