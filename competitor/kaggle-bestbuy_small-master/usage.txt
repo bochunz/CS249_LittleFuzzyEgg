@@ -1,0 +1,3 @@
+Usage: train.py <train file> <test file> <output file>
+
+For example: train.py train.csv test.csv predictions.txt
