@@ -69,11 +69,12 @@ public class Main {
 		for (Product product : productList) {
 			List<Tag> tagList = Bagger.toBag(product);
 			totalTags += tagList.size();
-			Indexed<Product> p = new Indexed<Product>(product);
-			p.addCount(tagList, true);
-			indexedProductMap.put(product.getSku(), p);
+			if (!indexedProductMap.containsKey(product.getSku())) {
+				Indexed<Product> p = new Indexed<Product>(product);
+				p.addCount(tagList, true);
+				indexedProductMap.put(product.getSku(), p);
+			}
 		}
-		System.out.println("total tag size: "+totalTags);
 		//System.out.println("Dic content: "+Dictionary.getInstance().getList());
 		System.out.println("2.1a");
 		for (Order o : orderList) {
@@ -85,7 +86,19 @@ public class Main {
 				p.addCount(tagList, false);
 			}
 		}
-		System.out.println("total tag size: "+totalTags);
+		
+		
+//		System.out.println("batman index");
+//		for (Tag tag : batman.getBag().getTags()) 
+//			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
+//		System.out.println("-----------------------");
+//		System.out.println("bioshock index");
+//		for (Tag tag : bioshock.getBag().getTags()) 
+//			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
+//	
+//		
+//		
+		
 		System.out.println("2.2");
 		/*
 		 * 2.3 Construct orderCount : < indexedProduct - number of orders on that product >
@@ -127,10 +140,10 @@ public class Main {
 					break;
 				}
 			}
-			if (!flag) {
-				if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
-				i++;
-			}
+//			if (!flag) {
+//				if (i < 10) printPrediction(testOrder, result, answerList.get(totalTest));
+//				i++;
+//			}
 			totalTest ++;
 		}
 		System.out.println("3.2-3");
