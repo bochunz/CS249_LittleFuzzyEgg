@@ -5,15 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag.Type;
 
 public class BagOfTags {
 	private final static int PRODUCT_WEIGHT = 10;
+	private final static int TARGET_WEIGHT = 10;
 	private final Map<Tag, Integer> count = new HashMap<Tag, Integer>();
 	
-	public void addCount(List<Tag> tags, boolean fromProduct) {
+	public void addCount(List<Tag> tags, boolean fromProduct, Dictionary dict) {
 		int weight = fromProduct ? PRODUCT_WEIGHT : 1;
 		addCount(tags, weight);
+		List<Tag> target = new ArrayList<Tag>();
+		for(Tag t : tags) {
+			if (dict.isImportant(t))
+				target.add(t);
+		}
+		addCount(target, TARGET_WEIGHT);
 	}
 	
 	public void addCount(List<Tag> tags, int c) {

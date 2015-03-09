@@ -1,6 +1,8 @@
 package edu.ucla.cs249.littlefuzzyegg.tfidf;
 
 import java.util.*;
+import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
+
 
 public class Indexed<T> {
 	private final T key;
@@ -11,8 +13,8 @@ public class Indexed<T> {
 		this.bag = new BagOfTags();
 	}
 	
-	public void addCount(List<Tag> tags, boolean fromProduct) {
-		bag.addCount(tags, fromProduct);
+	public void addCount(List<Tag> tags, boolean fromProduct, Dictionary dict) {
+		bag.addCount(tags, fromProduct, dict);
 	}
 		
 	public T getKey() {
