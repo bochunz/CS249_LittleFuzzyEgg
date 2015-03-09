@@ -87,17 +87,19 @@ public class Main {
 			}
 		}
 		
+		Indexed<Product> batman = indexedProductMap.get("2173065");
+		Indexed<Product> bioshock = indexedProductMap.get("2953816");
 		
-//		System.out.println("batman index");
-//		for (Tag tag : batman.getBag().getTags()) 
-//			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
-//		System.out.println("-----------------------");
-//		System.out.println("bioshock index");
-//		for (Tag tag : bioshock.getBag().getTags()) 
-//			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
-//	
-//		
-//		
+		System.out.println("batman index");
+		for (Tag tag : batman.getBag().getTags()) 
+			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
+		System.out.println("-----------------------");
+		System.out.println("bioshock index");
+		for (Tag tag : bioshock.getBag().getTags()) 
+			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
+	
+		
+		
 		
 		System.out.println("2.2");
 		/*
