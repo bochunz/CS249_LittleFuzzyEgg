@@ -71,7 +71,7 @@ public class Main {
 			totalTags += tagList.size();
 			if (!indexedProductMap.containsKey(product.getSku())) {
 				Indexed<Product> p = new Indexed<Product>(product);
-				p.addCount(tagList, true, Dictionary.getInstance());
+				p.addCount(tagList, true);
 				indexedProductMap.put(product.getSku(), p);
 			}
 		}
@@ -83,7 +83,7 @@ public class Main {
 			if (p != null) {
 				List<Tag> tagList = Bagger.toBag(o, orderHistory, true);
 				totalTags += tagList.size();
-				p.addCount(tagList, false, Dictionary.getInstance());
+				p.addCount(tagList, false);
 			}
 		}
 		
@@ -132,7 +132,7 @@ public class Main {
 		for (Order testOrder : testList) {
 			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
-			o.addCount(tagList, false, Dictionary.getInstance());
+			o.addCount(tagList, false);
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
 			boolean flag = false;
 			for (Product p : result) {
