@@ -61,6 +61,8 @@ public class Bagger {
     		if (corrected == null)
     			corrected = current;
     		
+    		// check acronym
+    		
     		// concatenate the prev with the current corrected
     		String append = prev + corrected;
     		
@@ -126,9 +128,13 @@ public class Bagger {
 				else
 					acronym += temp.charAt(0);
 			}
-			// get the acronym and put it as both word and acronym tag
-			acronymList.add(Tag.acronym(acronym));
-			acronymList.add(Tag.word(acronym));
+			
+			// we don't want length one acronym
+			if (acronym.length() > 1) {
+				// get the acronym and put it as both word and acronym tag
+				acronymList.add(Tag.acronym(acronym));
+				acronymList.add(Tag.word(acronym));
+			}
 		}
 		return acronymList;
 	}
@@ -156,17 +162,17 @@ public class Bagger {
 //		for (Tag tag : test) {
 //			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
 //		}
-//		Product product = new Product("Call Of Duty : Modern Warfare 3", "AA3333", 123, 12);
-//		List<Tag> test = toBag(product);
-//		for (Tag tag : test) {
-//			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
-//		}
-		
-		Order order = new Order("AAXXX", "Shaoxiang", 123456, "Battlefield 3");
-		List<Tag> test = toBag(order, null, true);
+		Product product = new Product("Call Of Duty : Modern Warfare 2 - Xbox 360", "AA3333", 123, 12);
+		List<Tag> test = toBag(product);
 		for (Tag tag : test) {
 			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
 		}
+		
+//		Order order = new Order("AAXXX", "Shaoxiang", 123456, "Battlefield 3");
+//		List<Tag> test = toBag(order, null, true);
+//		for (Tag tag : test) {
+//			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
+//		}
 	}
 	
 }
