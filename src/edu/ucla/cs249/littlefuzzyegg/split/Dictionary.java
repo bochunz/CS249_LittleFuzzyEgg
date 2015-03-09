@@ -243,7 +243,8 @@ public class Dictionary {
 				"agarest",
 				"konami",
 				"n3",
-				"marvel"));
+				"marvel",
+				"bioshock"));
 		
 	}
 	
