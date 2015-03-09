@@ -8,7 +8,7 @@ import java.util.Map;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag.Type;
 
 public class BagOfTags {
-	private final static int PRODUCT_WEIGHT = 30;
+	private final static int PRODUCT_WEIGHT = 10;
 	private final static int ACRONYM_WEIGHT = 1;
 	private final Map<Tag, Integer> count = new HashMap<Tag, Integer>();
 	
@@ -19,7 +19,7 @@ public class BagOfTags {
 		for(Tag t : tags)
 			if (t.getType() == Type.ACRONYM)
 				acronyms.add(t);
-		addCount(acronyms, weight * ACRONYM_WEIGHT);
+		addCount(acronyms, ACRONYM_WEIGHT);
 	}
 	
 	public void addCount(List<Tag> tags, int c) {

@@ -34,15 +34,16 @@ public class TfIdf {
 		
 		// TF_ij = f_ij / max_k{f_kj}
 		double tf = product.getCount(tag);
-		double norm = tf;
+		tf = Math.log(1 + tf);
+		/*double norm = tf;
 		for(Tag t : product.getTags())
 			norm = Math.max(norm, product.getCount(t));
 		if (norm > 0)
 			tf /= norm;
 		else
-			tf = 0;
-		if (tag.getType() == Type.ALSO) tf *= 0.8;
-		else if (tag.getType() == Type.ACRONYM) tf *= 1.2;
+			tf = 0;*/
+		if (tag.getType() == Type.ALSO) tf *= 1;
+		else if (tag.getType() == Type.ACRONYM) tf *= 1;
 		
 		// IDF_i = log(N / n_i)
 		double idf = Math.log(indexedProducts.size()) - Math.log(tags.get(tag));
@@ -79,7 +80,9 @@ public class TfIdf {
 		public int compareTo(Score other) {
 			if (this.score == other.score) {
 				// choose the product which occurs more frequently in the train set  
-				if (this.count == other.count) return 0;
+				if (this.count == other.count) {
+					return Integer.valueOf(this.product.getKey().getRank()).compareTo(other.product.getKey().getRank());
+				}
 				else return (this.count< other.count ? 1 : -1);
 			}
 			return this.score < other.score ? 1 : -1;
