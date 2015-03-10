@@ -10,7 +10,7 @@ import edu.ucla.cs249.littlefuzzyegg.data.Product;
 import edu.ucla.cs249.littlefuzzyegg.tfidf.Tag;
 
 public class Dictionary {
-	private static int ELIMINATE_LENGTH = 2;
+	public static int ELIMINATE_LENGTH = 2;
 	private Set<String> words;
 	private Set<String> importantWords;
 	private static Dictionary instance = null;

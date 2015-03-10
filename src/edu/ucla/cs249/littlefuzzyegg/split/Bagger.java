@@ -41,6 +41,11 @@ public class Bagger {
     	// add the acronym
     	result.addAll(Lists.newArrayList(toAcronym(query)));
     	
+//    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~");
+//    	for (Tag tag : result) {
+//    		System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
+//    	}
+//    	
     	// then we do on the query
     	List<String> termList = Lists.newArrayList(TERM_SPLITTER.split(query));
     	String prev = null;
@@ -50,19 +55,22 @@ public class Bagger {
     		// if current is a number
     		// append with prev and we jump this term
     		if (current.matches(NUMBER)) {
-    			result.add(Tag.word(prev + current));
+    			if (prev == null)
+    				result.add(Tag.word(prev + current));
     			continue;
     		}
     		
     		// here we try to correct the word
     		// if the checker returns a null, meaning we cannot use it to correct
     		// then the corrected is current
-    		String corrected = SpellChecker.getInstance().check(current);
+    		String corrected = null;
+    		if (current.length() > Dictionary.ELIMINATE_LENGTH)
+    			corrected = SpellChecker.getInstance().check(current);
+    		
     		if (corrected == null)
     			corrected = current;
     		
-    		// check acronym
-    		
+    			
     		// concatenate the prev with the current corrected
     		String append = prev + corrected;
     		
@@ -162,17 +170,17 @@ public class Bagger {
 //		for (Tag tag : test) {
 //			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
 //		}
-		Product product = new Product("Call Of Duty : Modern Warfare 2 - Xbox 360", "AA3333", 123, 12);
-		List<Tag> test = toBag(product);
-		for (Tag tag : test) {
-			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
-		}
-		
-//		Order order = new Order("AAXXX", "Shaoxiang", 123456, "Battlefield 3");
-//		List<Tag> test = toBag(order, null, true);
+//		Product product = new Product("Call Of Duty : Modern Warfare 2 - Xbox 360", "2670133", 123, 12);
+//		List<Tag> test = toBag(product);
 //		for (Tag tag : test) {
-//			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
+//			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
 //		}
+//		
+		Order order = new Order("", "Shaoxiang", 1318030911, "Call of duty");
+		List<Tag> test = toBag(order, null, false);
+		for (Tag tag : test) {
+			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
+		}
 	}
 	
 }
