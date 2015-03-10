@@ -62,6 +62,7 @@ public class Main {
 		
 		OrderHistory orderHistory = new OrderHistory(orderList);
 		System.out.println("2.1");
+		
 		/*
 		 * 2.2 Generate List of Tags for each product and insert into indexedProductMap
 		 */
@@ -75,6 +76,14 @@ public class Main {
 				indexedProductMap.put(product.getSku(), p);
 			}
 		}
+		
+
+		Order order = new Order("", "Shaoxiang", 1318030911, "Call of duty");
+		List<Tag> test = Bagger.toBag(order, orderHistory, false);
+		for (Tag tag : test) {
+			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
+		}
+		
 		//System.out.println("Dic content: "+Dictionary.getInstance().getList());
 		System.out.println("2.1a");
 		for (Order o : orderList) {
@@ -86,6 +95,7 @@ public class Main {
 				p.addCount(tagList, false);
 			}
 		}
+		
 		
 		Indexed<Product> batman = indexedProductMap.get("2173065");
 		Indexed<Product> bioshock = indexedProductMap.get("2953816");
