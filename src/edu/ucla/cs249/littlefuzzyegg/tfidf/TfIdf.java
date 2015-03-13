@@ -19,7 +19,7 @@ public class TfIdf {
 				this.tags.put(tag, c);
 			}
 		}
-		System.out.println("tags size: " + tags.size());
+		//System.out.println("tags size: " + tags.size());
 	}
 	
 	public double getTfIdf(BagOfTags query, Indexed<Product> product) {
@@ -39,8 +39,8 @@ public class TfIdf {
 		/*double norm = tf;
 		for(Tag t : product.getTags())
 			norm = Math.max(norm, product.getCount(t));
-		//tf = 0.5 + 0.5 * tf / norm;
-		tf = tf / norm;*/
+		tf = 0.5 + 0.5 * tf / norm;
+		//tf = tf / norm;*/
 		
 		// TF_ij = 1 + log(f_ij)
 		//tf = tf == 0 ? 0 : 1 + Math.log(tf);
