@@ -47,21 +47,21 @@ public class Main {
 		
 		List<Order> orderList = OrderReader.ReadTrainOrders(trainFile);
 		List<Order> testList = OrderReader.ReadTestOrders(testFile);
-		System.out.println("testList #: "+testList.size());
-		System.out.println("testList: "+testList.get(7000));
+		//System.out.println("testList #: "+testList.size());
+		//System.out.println("testList: "+testList.get(7000));
 		/*
 		 * 1.3 Read answer file
 		 */
 		
 		List<String> answerList = LabelReader.ReadLabels(answerFile);
-		System.out.println("answerList #: "+answerList.size());
-		System.out.println("answerList: "+answerList.get(7000));
+		//System.out.println("answerList #: "+answerList.size());
+		//System.out.println("answerList: "+answerList.get(7000));
 		/*
 		 * 2.1 Generate orderHistory
 		 */
 		
 		OrderHistory orderHistory = new OrderHistory(orderList);
-		System.out.println("2.1");
+		System.out.print("training......");
 		
 		/*
 		 * 2.2 Generate List of Tags for each product and insert into indexedProductMap
@@ -78,14 +78,14 @@ public class Main {
 		}
 		
 
-		Order order = new Order("", "Shaoxiang", 1318030911, "Call of duty");
+		/*Order order = new Order("", "Shaoxiang", 1318030911, "Call of duty");
 		List<Tag> test = Bagger.toBag(order, orderHistory, false);
 		for (Tag tag : test) {
 			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
-		}
+		}*/
 		
 		//System.out.println("Dic content: "+Dictionary.getInstance().getList());
-		System.out.println("2.1a");
+		//System.out.println("2.1a");
 		for (Order o : orderList) {
 			//System.out.println(o.getUser()+" "+o.getSku());
 			Indexed<Product> p = indexedProductMap.get(o.getSku());
@@ -100,18 +100,18 @@ public class Main {
 		Indexed<Product> batman = indexedProductMap.get("2173065");
 		Indexed<Product> bioshock = indexedProductMap.get("2953816");
 		
-		System.out.println("batman index");
+		/*System.out.println("batman index");
 		for (Tag tag : batman.getBag().getTags()) 
 			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
 		System.out.println("-----------------------");
 		System.out.println("bioshock index");
 		for (Tag tag : bioshock.getBag().getTags()) 
-			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
+			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));*/
 	
 		
 		
 		
-		System.out.println("2.2");
+		//System.out.println("2.2");
 		/*
 		 * 2.3 Construct orderCount : < indexedProduct - number of orders on that product >
 		 */
@@ -126,13 +126,14 @@ public class Main {
 				orderCount.put(p, orderCount.get(p)+1);
 			}
 		}
-		System.out.println("2.3");
+		//System.out.println("2.3");
+		System.out.println("done");
 		/*
 		 * 3.1 Generate instance of TfIdf
 		 */
 		
 		TfIdf tfIdf = new TfIdf(orderCount);
-		System.out.println("3.1");
+		System.out.print("testing......");
 		/* 
 		 * 3.2 For each testOrder, select top-N products
 		 * 3.3 Compare with answer list and calculate accuracy
@@ -152,18 +153,18 @@ public class Main {
 					break;
 				}
 			}
-			if (!flag) {
+			/*if (!flag) {
 				if (i < 20) printPrediction(testOrder, result, answerList.get(totalTest));
 				i++;
-			}
+			}*/
 			totalTest ++;
 		}
-		System.out.println("3.2-3");
+		System.out.println("done");
 		/*
 		 * 4. Output Accuracy
 		 */
 		System.out.println("The accuracy is "+(double)correctNumber/(double)totalTest);
-		System.out.println("4");
+		//System.out.println("4");
 	}
 	
 	public static void printPrediction(Order testOrder, List<Product> result, String sku) {
