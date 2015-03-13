@@ -165,7 +165,7 @@ public class Bagger {
 	}
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 //		List<Tag> test = toAcronym("NCAA Football 12");
 //		for (Tag tag : test) {
 //			System.out.print(tag.getValue() + " " + tag.getType().toString() + " ");
@@ -181,6 +181,6 @@ public class Bagger {
 		for (Tag tag : test) {
 			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
 		}
-	}
+	}*/
 	
 }

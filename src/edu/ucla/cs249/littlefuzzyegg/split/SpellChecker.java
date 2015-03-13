@@ -62,7 +62,7 @@ public class SpellChecker {
 					//update dp value for +1 length
 					dp[i+1][j+1] = dp[i][j];
 				} else {
-					int replace = dp[i][j] + 1;
+					int replace = dp[i][j] + 2;
 					int insert = dp[i][j+1] + 1;
 					int delete = dp[i+1][j] + 1;
 	 
