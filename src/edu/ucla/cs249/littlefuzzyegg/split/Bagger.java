@@ -23,7 +23,7 @@ public class Bagger {
     private static final Pattern PHRASE_SEPARATOR_PATTERN = Pattern.compile("[:\\+-/\\(\\)]");
     private static final Splitter PHRASE_SPLITTER = Splitter.on(PHRASE_SEPARATOR_PATTERN)
     														.omitEmptyStrings().trimResults();
-    
+   
     public static List<Tag> toBag(Order order, OrderHistory history, boolean isTraining) {
     	List<Tag> result = new ArrayList<Tag>();
     	String query = order.getQuery().toLowerCase();

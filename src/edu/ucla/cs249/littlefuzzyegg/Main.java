@@ -13,12 +13,11 @@ import edu.ucla.cs249.littlefuzzyegg.split.Dictionary;
 
 public class Main {
 	
-	/*
-	 * < sku - indexedProduct >
-	 */
+	// indexedProductMap contains all the key value pairs that map the SKU to a product index
 	private static Map<String, Indexed<Product>> indexedProductMap = Maps.newHashMap();
+	// the number of total orders in test data set
 	private static int totalTest = 0;
-	
+	// the number of recommendations that will be returned
 	public final static int TOP_N = 5;
 	
 	public static void main(String[] args) {
@@ -34,42 +33,26 @@ public class Main {
 		String testFile = args[3];
 		String answerFile = args[4];
 		
-		/*
-		 * 1.1 Read product data file, together with rank file
-		 */
 		
+		//Read product data file, together with rank file
 		Map<String, Integer> rankMap = RankReader.ReadRank(productRankFile);
 		List<Product> productList = ProductReader.ReadProducts(productSpecFile, rankMap);
 		
-		/*
-		 * 1.2 Read train file and test file
-		 */
-		
+		//Read train file and test file
 		List<Order> orderList = OrderReader.ReadTrainOrders(trainFile);
 		List<Order> testList = OrderReader.ReadTestOrders(testFile);
-		//System.out.println("testList #: "+testList.size());
-		//System.out.println("testList: "+testList.get(7000));
-		/*
-		 * 1.3 Read answer file
-		 */
 		
+		//Read the answer file
 		List<String> answerList = LabelReader.ReadLabels(answerFile);
-		//System.out.println("answerList #: "+answerList.size());
-		//System.out.println("answerList: "+answerList.get(7000));
-		/*
-		 * 2.1 Generate orderHistory
-		 */
 		
+		//Generate orderHistory
+		//an order history maps the user id to a set of products that the author choose
 		OrderHistory orderHistory = new OrderHistory(orderList);
 		System.out.print("training......");
 		
-		/*
-		 * 2.2 Generate List of Tags for each product and insert into indexedProductMap
-		 */
-		int totalTags = 0;
+		 //Generate list of tags for each product and insert into indexedProductMap
 		for (Product product : productList) {
 			List<Tag> tagList = Bagger.toBag(product);
-			totalTags += tagList.size();
 			if (!indexedProductMap.containsKey(product.getSku())) {
 				Indexed<Product> p = new Indexed<Product>(product);
 				p.addCount(tagList, true);
@@ -77,45 +60,16 @@ public class Main {
 			}
 		}
 		
-
-		/*Order order = new Order("", "Shaoxiang", 1318030911, "Call of duty");
-		List<Tag> test = Bagger.toBag(order, orderHistory, false);
-		for (Tag tag : test) {
-			System.out.println(tag.getValue() + " " + tag.getType().toString() + " ");
-		}*/
-		
-		//System.out.println("Dic content: "+Dictionary.getInstance().getList());
-		//System.out.println("2.1a");
+		//Generate list of tags for each product from order training data
 		for (Order o : orderList) {
-			//System.out.println(o.getUser()+" "+o.getSku());
 			Indexed<Product> p = indexedProductMap.get(o.getSku());
 			if (p != null) {
 				List<Tag> tagList = Bagger.toBag(o, orderHistory, true);
-				totalTags += tagList.size();
 				p.addCount(tagList, false);
 			}
 		}
 		
-		
-		Indexed<Product> batman = indexedProductMap.get("2173065");
-		Indexed<Product> bioshock = indexedProductMap.get("2953816");
-		
-		/*System.out.println("batman index");
-		for (Tag tag : batman.getBag().getTags()) 
-			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));
-		System.out.println("-----------------------");
-		System.out.println("bioshock index");
-		for (Tag tag : bioshock.getBag().getTags()) 
-			System.out.println("Type: " + tag.getType() + " " + "content: " + tag.getValue() + " " + "count: " + batman.getBag().getCount(tag));*/
-	
-		
-		
-		
-		//System.out.println("2.2");
-		/*
-		 * 2.3 Construct orderCount : < indexedProduct - number of orders on that product >
-		 */
-		
+		//Construct orderCount : < indexedProduct - number of orders on that product >		
 		Map<Indexed<Product>, Integer> orderCount = Maps.newHashMap();
 		for (Indexed<Product> p : indexedProductMap.values()) {
 			orderCount.put(p, 0);
@@ -126,45 +80,33 @@ public class Main {
 				orderCount.put(p, orderCount.get(p)+1);
 			}
 		}
-		//System.out.println("2.3");
 		System.out.println("done");
-		/*
-		 * 3.1 Generate instance of TfIdf
-		 */
-		
+
+		//Generate instance of TfIdf
 		TfIdf tfIdf = new TfIdf(orderCount);
 		System.out.print("testing......");
-		/* 
-		 * 3.2 For each testOrder, select top-N products
-		 * 3.3 Compare with answer list and calculate accuracy
-		 */
+		
+		 
+		//For each testOrder, select top-N products
+		//Compare with answer list and calculate accuracy
 		int correctNumber = 0;
-		int i = 0;
 		for (Order testOrder : testList) {
 			List<Tag> tagList = Bagger.toBag(testOrder, orderHistory, false);
 			Indexed<Order> o = new Indexed<Order>(testOrder);
 			o.addCount(tagList, false);
 			List<Product> result = tfIdf.getPrediction(o, TOP_N);
-			boolean flag = false;
 			for (Product p : result) {
 				if (answerList.get(totalTest).compareTo(p.getSku()) == 0) {
 					correctNumber++;
-					flag = true;
 					break;
 				}
 			}
-			/*if (!flag) {
-				if (i < 20) printPrediction(testOrder, result, answerList.get(totalTest));
-				i++;
-			}*/
 			totalTest ++;
 		}
 		System.out.println("done");
-		/*
-		 * 4. Output Accuracy
-		 */
+	
+		//Output Accuracy
 		System.out.println("The accuracy is "+(double)correctNumber/(double)totalTest);
-		//System.out.println("4");
 	}
 	
 	public static void printPrediction(Order testOrder, List<Product> result, String sku) {
